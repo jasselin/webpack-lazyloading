@@ -18,7 +18,7 @@ function module1Button() {
     element.addEventListener('click', function() {
         console.log('Module 1 - click');
 
-        import('./module1')
+        import(/* webpackChunkName: "module1" */'./module1')
             .then(module1 => {
                 var obj = new module1.default();
                 console.log(obj.name);
@@ -38,7 +38,7 @@ function module2Button() {
     element.addEventListener('click', function() {
         console.log('Module 2 - click');
 
-        import('./module2')
+        import(/* webpackChunkName: "module2" */'./module2')
             .then(module2 => {
                 var obj = new module2.default();
                 console.log(obj.name);

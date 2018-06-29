@@ -17,6 +17,7 @@
   },
   "homepage": "https://github.com/jasselin/webpack-lazyloading#readme",
   "devDependencies": {
+    "clean-webpack-plugin": "^0.1.19",
     "webpack": "^4.14.0",
     "webpack-cli": "^3.0.8"
   },
