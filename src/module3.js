@@ -1,18 +1,18 @@
 import _ from 'lodash';
 import commonFn from './common';
 
-console.log("Module2 - Loaded");
+console.log("Module3 - Loaded");
 
-class Module2 {
+class Module3 {
     get name() {
-        return _.join(['Module2.name', ' - ', 'get'], ' ');
+        return _.join(['Module3.name', ' - ', 'get'], ' ');
     }
 
     test() {
         console.log(this.name);
-        commonFn("Module2");
+        commonFn("Module3");
         console.log("---");
     }
 }
 
-export default Module2;
+export default Module3;
