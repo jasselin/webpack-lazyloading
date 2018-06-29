@@ -16,7 +16,13 @@ function module1Button() {
     element.value = 'Module 1';
 
     element.addEventListener('click', function() {
-        console.log('module 1');
+        console.log('Module 1 - click');
+
+        import('./module1')
+            .then(module1 => {
+                var obj = new module1.default();
+                console.log(obj.name);
+            });
     });
 
     return element;
@@ -30,7 +36,13 @@ function module2Button() {
     element.value = 'Module 2';
 
     element.addEventListener('click', function() {
-        console.log('module 2');
+        console.log('Module 2 - click');
+
+        import('./module2')
+            .then(module2 => {
+                var obj = new module2.default();
+                console.log(obj.name);
+            });
     });
 
     return element;
