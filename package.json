@@ -4,7 +4,8 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack"
+    "build": "webpack",
+    "vendor": "webpack --config webpack.vendor.js"
   },
   "repository": {
     "type": "git",
@@ -22,7 +23,6 @@
     "webpack-cli": "^3.0.8"
   },
   "dependencies": {
-    "lodash": "^4.17.10",
-    "scriptjs": "^2.5.8"
+    "lodash": "^4.17.10"
   }
 }

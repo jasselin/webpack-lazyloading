@@ -1,30 +1,32 @@
 const path = require('path');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
+  mode: 'development',
   entry: {
-    'main': './src/index.js', 
+
+    'main': './src/index.js',
     'module3': './src/module3.js'
   },
   output: {
-    chunkFilename: '[name].js',
-    filename: '[name].js',
-    path: path.resolve(__dirname, 'dist')
+    chunkFilename: '[name]-chunk.js',
+    filename: '[name]-bundle.js',
+    path: path.join(__dirname, 'dist')
   },
   plugins: [
-    new CleanWebpackPlugin(['dist'], { exclude: "index.html" })
+    new CleanWebpackPlugin(['dist'], {
+      exclude: ["index.html", "vendor-bundle.js", "manifest.json"]
+    }),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./build/manifest.json')
+    })
   ],
   optimization: {
     splitChunks: {
       cacheGroups: {
-        default: false,
-        vendor: {
-            test: /node_modules/,
-            name: "vendor",
-            chunks: "initial",
-            minSize: 1,
-            priority: 10
-        }
+        default: false
       }
     }
   }

@@ -1,5 +1,4 @@
 import _ from 'lodash';
-import scriptjs from 'scriptjs';
 
 console.log("index - Loaded");
 
@@ -66,9 +65,20 @@ function module3Button() {
         //         var obj = new module2.default();
         //         obj.test();
         //     });
-        scriptjs("module3.js", function() {
-            console.log("scriptjs - module3", arguments);
-        });
+
+        // scriptjs.get("module3-bundle.js", function() {
+        //     console.log("scriptjs - module3", arguments);
+        // });
+
+        // $.getJSON("module3-bundle.js", function() {
+        //     console.log(arguments);
+        // });
+
+        fetch('module3-bundle.js').then(response => response.text())
+            .then((text) => {
+                var obj = new (eval(text)).default;
+                obj.test();
+            });
     });
 
     return element;
