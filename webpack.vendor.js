@@ -1,24 +1,18 @@
-const webpack = require('webpack');
 const path = require('path');
+const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
     mode: 'development',
-    node: {
-            dns: 'empty',
-            net: 'empty'
-    },
     entry: {
         vendor: [
-            'promise-polyfill',
-            'fetch',
             'lodash'
         ]
     },
     output: {
         filename: '[name].js',
         path: path.join(__dirname, 'dist'),
-        library: '[name]'
+        library: '[name]',
     },
     plugins: [
         new CleanWebpackPlugin(['build']),

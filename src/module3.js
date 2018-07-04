@@ -1,7 +1,7 @@
 import _ from 'lodash';
 import commonFn from './common';
 
-console.log("Module3 - Loaded");
+console.warn("Module3 - Loaded");
 
 class Module3 {
     get name() {
