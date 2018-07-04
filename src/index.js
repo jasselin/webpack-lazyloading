@@ -50,31 +50,17 @@ function module2Button() {
     return element;
 }
 
-function module3Button() {
+function module3StandaloneButton() {
     var element = document.createElement('input');
 
     element.type = 'button';
-    element.name = "btnModule3";
-    element.value = 'Module 3';
+    element.name = "btnModule3Standalone";
+    element.value = 'Module 3 (standalone)';
 
     element.addEventListener('click', function() {
-        console.log('Module 3 - click');
+        console.log('Module 3 (standalone) - click');
 
-        // import(/* webpackChunkName: "module3" */'./module3')
-        //     .then(module2 => {
-        //         var obj = new module2.default();
-        //         obj.test();
-        //     });
-
-        // scriptjs.get("module3-bundle.js", function() {
-        //     console.log("scriptjs - module3", arguments);
-        // });
-
-        // $.getJSON("module3-bundle.js", function() {
-        //     console.log(arguments);
-        // });
-
-        fetch('module3-bundle.js').then(response => response.text())
+        fetch('module3-standalone.js').then(response => response.text())
             .then((text) => {
                 var obj = new (eval(text)).default;
                 obj.test();
@@ -87,4 +73,4 @@ function module3Button() {
 document.body.appendChild(component());
 document.body.appendChild(module1Button());
 document.body.appendChild(module2Button());
-document.body.appendChild(module3Button());
+document.body.appendChild(module3StandaloneButton());

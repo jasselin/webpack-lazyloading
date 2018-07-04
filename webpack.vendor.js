@@ -4,14 +4,19 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 
 module.exports = {
     mode: 'development',
+    node: {
+            dns: 'empty',
+            net: 'empty'
+    },
     entry: {
-        'vendor': [
-            'lodash',
-            'jquery'
+        vendor: [
+            'promise-polyfill',
+            'fetch',
+            'lodash'
         ]
     },
     output: {
-        filename: '[name]-bundle.js',
+        filename: '[name].js',
         path: path.join(__dirname, 'dist'),
         library: '[name]'
     },

@@ -5,18 +5,17 @@ const CleanWebpackPlugin = require('clean-webpack-plugin')
 module.exports = {
   mode: 'development',
   entry: {
-
     'main': './src/index.js',
     'module3': './src/module3.js'
   },
   output: {
     chunkFilename: '[name]-chunk.js',
-    filename: '[name]-bundle.js',
+    filename: '[name].js',
     path: path.join(__dirname, 'dist')
   },
   plugins: [
     new CleanWebpackPlugin(['dist'], {
-      exclude: ["index.html", "vendor-bundle.js", "manifest.json"]
+      exclude: ["index.html", "vendor.js", "manifest.json"]
     }),
     new webpack.DllReferencePlugin({
       context: __dirname,
@@ -24,10 +23,6 @@ module.exports = {
     })
   ],
   optimization: {
-    splitChunks: {
-      cacheGroups: {
-        default: false
-      }
-    }
+    runtimeChunk: 'single'
   }
 };
