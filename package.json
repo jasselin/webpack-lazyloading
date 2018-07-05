@@ -4,7 +4,7 @@
   "description": "",
   "private": true,
   "scripts": {
-    "build": "webpack",
+    "build": "webpack && webpack --env.loader1 && webpack --env.loader2",
     "vendor": "webpack --config webpack.vendor.js"
   },
   "repository": {
