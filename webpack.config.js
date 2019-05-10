@@ -2,68 +2,52 @@ const path = require('path');
 const webpack = require('webpack');
 const CleanWebpackPlugin = require('clean-webpack-plugin')
 
-var entries = {
-  'main': './src/index.js'
-};
-
-for (var i = 1; i <= 3; i++) {
-  entries['module3-' + i] = './src/module3.js';
-}
-
-var createConfig = function (configEntries) {
-  return {
-    mode: 'development',
-    entry: configEntries,
-    output: {
-      chunkFilename: '[name].js',
-      filename: '[name].js',
-      path: path.join(__dirname, 'dist', 'out')
-    },
-    plugins: [
-      new CleanWebpackPlugin(),
-      new webpack.DllReferencePlugin({
-        context: __dirname,
-        manifest: require('./build/manifest.json')
-      })
-    ],
-    optimization: {
-      runtimeChunk: 'single'
-    }
-  };
-}
-
-/*
-module.exports = (env) => {
-  var configs = [];
-  if (env && env.loader1)
-    configs.push(createConfig({'loader1': './src/loader1.js'}))
-  else if (env && env.loader2)
-    configs.push(createConfig({'loader2': './src/loader2.js'}))
-  else
-    configs.push(createConfig(entries));
-
-    return configs;
-};
-*/
-
 module.exports = {
   mode: 'development',
-  entry: path.resolve(__dirname, 'src/index.js'),
+  // devtool: 'inline-source-map',
+  entry: {
+    'main': path.resolve(__dirname, 'src/index.js'),
+    'module1': path.resolve(__dirname, 'src/module1.js'),
+    'module2': path.resolve(__dirname, 'src/module2.js'),
+    'module3': path.resolve(__dirname, 'src/module3.js'),
+  },
   output: {
     path: path.resolve(__dirname, 'dist', 'out'),
     filename: '[name].js',
+    library: ['WebpackTest', '[name]'],
+    libraryTarget: "umd",
     publicPath: 'out/',
   },
   optimization: {
     splitChunks: {
-      chunks: 'all',
+        cacheGroups: {
+            // projectLib: {
+            //     test: (module, chunks) => module.context == ProjectLibDir,
+            //     name: "projectLib",
+            //     chunks: "all",
+            //     minChunks: 1,
+            //     minSize: 0,
+            //     priority: 20,
+            //     enforce: true
+            // },
+            vendors: {
+                test: (module, chunks) => module.depth > 0,
+                name: "vendors",
+                chunks: "all",
+                minChunks: 1,
+                minSize: 0,
+                priority: 10,
+                enforce: true
+            }
+        }
     },
+    runtimeChunk: { name: "manifest" },
   },
-  plugins:[
-    new CleanWebpackPlugin(),
-    new webpack.DllReferencePlugin({
-      context: __dirname,
-      manifest: require('./build/manifest.json')
-    })
+  plugins: [
+    new CleanWebpackPlugin()
+    // new webpack.DllReferencePlugin({
+    //   context: __dirname,
+    //   manifest: require('./build/manifest.json')
+    // })
   ],
 };

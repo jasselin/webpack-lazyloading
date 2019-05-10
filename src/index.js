@@ -2,7 +2,30 @@ import _ from 'lodash';
 
 console.log('index - Loaded');
 
-window.loaders = [];
+var modules = window.WebpackTest;
+
+const loadModule = name => {
+    return new Promise((resolve, reject) => {
+
+        let onLoad = () => {
+            var m = new modules[name].default();
+            resolve(m)
+        }
+
+        if (modules[name])
+        {
+            onLoad();
+            return;
+        }
+
+        const script = document.createElement('script');
+        document.body.appendChild(script);
+        script.onload = onLoad;
+        script.onerror = reject;
+        script.async = true;
+        script.src = 'out/' + name + '.js';
+    });
+};
 
 function component() {
     var element = document.createElement('div');
@@ -22,10 +45,9 @@ function module1Button() {
     element.addEventListener('click', function () {
         console.log('Module 1 - click');
 
-        import( /* webpackChunkName: 'module1' */ './module1')
-        .then(module1 => {
-            var instance = new module1.default();
-            instance.test();
+        loadModule('module1')
+        .then((m) => {
+            m.test();
         });
     });
 
@@ -42,10 +64,9 @@ function module2Button() {
     element.addEventListener('click', function () {
         console.log('Module 2 - click');
 
-        import( /* webpackChunkName: 'module2' */ './module2')
-        .then(module2 => {
-            var instance = new module2.default();
-            instance.test();
+        loadModule('module2')
+        .then((m) => {
+            m.test();
         });
     });
 
