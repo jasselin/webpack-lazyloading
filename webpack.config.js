@@ -6,23 +6,21 @@ var entries = {
   'main': './src/index.js'
 };
 
-for(var i = 1; i <= 3; i++) {
+for (var i = 1; i <= 3; i++) {
   entries['module3-' + i] = './src/module3.js';
 }
 
-var createConfig = function(configEntries) {
+var createConfig = function (configEntries) {
   return {
     mode: 'development',
     entry: configEntries,
     output: {
       chunkFilename: '[name].js',
       filename: '[name].js',
-      path: path.join(__dirname, 'dist')
+      path: path.join(__dirname, 'dist', 'out')
     },
     plugins: [
-      // new CleanWebpackPlugin(['dist'], {
-      //   exclude: ["index.html", "vendor.js", "manifest.json"]
-      // }),
+      new CleanWebpackPlugin(),
       new webpack.DllReferencePlugin({
         context: __dirname,
         manifest: require('./build/manifest.json')
@@ -34,6 +32,7 @@ var createConfig = function(configEntries) {
   };
 }
 
+/*
 module.exports = (env) => {
   var configs = [];
   if (env && env.loader1)
@@ -44,4 +43,27 @@ module.exports = (env) => {
     configs.push(createConfig(entries));
 
     return configs;
+};
+*/
+
+module.exports = {
+  mode: 'development',
+  entry: path.resolve(__dirname, 'src/index.js'),
+  output: {
+    path: path.resolve(__dirname, 'dist', 'out'),
+    filename: '[name].js',
+    publicPath: 'out/',
+  },
+  optimization: {
+    splitChunks: {
+      chunks: 'all',
+    },
+  },
+  plugins:[
+    new CleanWebpackPlugin(),
+    new webpack.DllReferencePlugin({
+      context: __dirname,
+      manifest: require('./build/manifest.json')
+    })
+  ],
 };

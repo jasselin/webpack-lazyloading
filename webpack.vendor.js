@@ -11,11 +11,11 @@ module.exports = {
     },
     output: {
         filename: '[name].js',
-        path: path.join(__dirname, 'dist'),
+        path: path.join(__dirname, 'dist', 'vendor'),
         library: '[name]',
     },
     plugins: [
-        new CleanWebpackPlugin(['build']),
+        new CleanWebpackPlugin(),
         new webpack.DllPlugin({
             context: __dirname,
             name: '[name]',
